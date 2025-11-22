@@ -1,0 +1,22 @@
+[Desktop Entry]
+FullScreen=false
+
+[MainWindow]
+2 screens: Height=1048
+2 screens: Width=1612
+2 screens: XPosition=2158
+2 screens: YPosition=57
+2047x1151 screen: Height=972
+2047x1151 screen: Width=1833
+2047x1151 screen: XPosition=100
+2047x1151 screen: YPosition=117
+State=AAAA/wAAAAD9AAAAAAAABkwAAAPfAAAABAAAAAQAAAAIAAAACPwAAAADAAAAAQAAAAEAAAAsAHEAdQBpAGMAawBBAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHICAAAAAP////8AAAAAAAAAAAAAAAIAAAABAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAAAAAAIAAAABAAAAIgBhAG4AbgBvAHQAYQB0AGkAbwBuAFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAA==
+ToolBarsMovable=Disabled
+XWAYLAND0=XWAYLAND0
+XWAYLAND0 XWAYLAND59=XWAYLAND0
+
+[Recent Files]
+File1[$e]=/mnt/f/Cpp_Books/Qt基础教程.pdf
+File2[$e]=/mnt/d/Books/Other_Books/Network_related/TCPIP Illustrated Vol. 1 (2nd Ed) (Kevin R. Fall, W. Richard Stevens) (Z-Library).pdf
+Name1[$e]=Qt基础教程.pdf
+Name2[$e]=TCPIP Illustrated Vol. 1 (2nd Ed) (Kevin R. Fall, W. Richard Stevens) (Z-Library).pdf

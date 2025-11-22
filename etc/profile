@@ -1,0 +1,66 @@
+# /etc/profile: system-wide .profile file for the Bourne shell (sh(1))
+# and Bourne compatible shells (bash(1), ksh(1), ash(1), ...).
+
+if [ -z "${WSL_DISTRO_NAME}" ]; then
+  if [ "`id -u`" -eq 0 ]; then
+    PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+  else
+    PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+  fi
+fi
+export PATH
+
+if [ "${PS1-}" ]; then
+  if [ "${BASH-}" ] && [ "$BASH" != "/bin/sh" ]; then
+    # The file bash.bashrc already sets the default PS1.
+    # PS1='\h:\w\$ '
+    if [ -f /etc/bash.bashrc ]; then
+      . /etc/bash.bashrc
+    fi
+  else
+    if [ "`id -u`" -eq 0 ]; then
+      PS1='# '
+    else
+      PS1='$ '
+    fi
+  fi
+fi
+
+if [ -d /etc/profile.d ]; then
+  for i in /etc/profile.d/*.sh; do
+    if [ -r $i ]; then
+      . $i
+    fi
+  done
+  unset i
+fi
+
+
+
+#export http_proxy="http://172.17.208.1:20413"
+#export https_proxy="http://172.17.208.1:20413"
+export LearningDisk=/mnt/d
+export DataDisk=/mnt/e                                                                                                                                                                                        
+export OtherDisk=/mnt/f                                                                                                                                                                                      
+export Android156=/mnt/Android156                                                                                                                                                                            
+export RealbomFTP=/mnt/RealbomFTP                                                                                                                                                                            
+export Learning=/mnt/Win10/Learning                                                                                                                                                                         
+export Data=/mnt/Win10/Data                                                                                                                                                                         
+export Other=/mnt/Win10/Other                                                                                                                                                                         
+export System=/mnt/Win10/System                                                                                                                                                                               
+export GDriver=/mnt/Win10/GDriver                                                                                                                                                                               
+export RBDebian=/mnt/RBDebian                                                                                                                                                                                    
+                                                                                                                                                                                                             
+export LFS=/mnt/LFS                                                                                                                                                                                          
+                                                                                                                                                                                                             
+export http_proxy=http://127.0.0.1:20412                                                                                                                                                                     
+export HTTP_PROXY=http://127.0.0.1:20412                                                                                                                                                                     
+export https_proxy=http://127.0.0.1:20412                                                                                                                                                                    
+export HTTPS_PROXY=http://127.0.0.1:20412                                                                                                                                                                    
+                                                                                                                                                                                                             
+export JAVA_TOOL_OPTIONS='-Djava.net.useSystemProxies=true'
+
+# This avoid the wsl auto shutdown
+#if command -v dbus-launch >/dev/null 2>&1 && [ -z "$DBUS_SESSION_BUS_ADDRESS" ]; then
+#    eval "$(dbus-launch --sh-syntax --exit-with-session)"
+#fi

@@ -1,0 +1,33 @@
+[user]
+	email = lvyc@realbom.com
+	name = Lysander Lyu
+[core]
+	editor = nvim
+[http]
+	sslVerify = false
+[color]
+	ui = auto
+[alias]
+	ps = push
+	pl = pull
+	co = checkout
+	br = branch
+	bl = blame
+        d = diff
+        di = diff
+	cm = commit
+	s = status
+	st = status
+	rd = reset --hard
+	rs = reset --soft
+	ra = reset --mixed
+	lg = log --graph
+	lga = log --graph --all
+	last = log -1 HEAD
+	wta = worktree add
+	wtl = worktree list
+	wtm = worktree move
+	wtd = worktree remove
+	wtr = worktree repair
+	wtp = worktree prune
+        lgf = "!f() { git log --pretty=format:'%h %ad %an %s' --date=short -- \"$1\"; }; f"

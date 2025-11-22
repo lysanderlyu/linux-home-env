@@ -1,0 +1,44 @@
+# ===== CORE SETTINGS =====
+set recolor true
+set recolor-darkcolor "#0A0C10"    # Dark text
+set recolor-lightcolor "#D3D3D3"   # Light Background
+set sandbox none		 # Disable sandbox while open web link
+
+#set guioptions "none"              # Clean UI
+set smooth-scroll true
+set scroll-step 40                 # Smooth scrolling
+set font "SF Pro Regular 11"
+
+set preload true               # Load pages in background
+set selection-clipboard clipboard
+
+set zoom-min 180                    # Minimum zoom level
+set zoom-center true
+set zoom-step 10
+set adjust-open best-fit
+
+# ===== PROVEN KEYBINDINGS =====
+# View Modes
+map w toggle_fullscreen            # Correct fullscreen toggle
+map o toggle_index            # Correct fullscreen toggle
+map c recolor                      # Color inversion
+
+# Set windows size
+set window-width 1720
+set window-height 1350
+set window-title-basename true
+#set adjust-open "width"         # Fit width on open
+
+# Zoom Controls
+map [ zoom in
+# map s zoom in
+map ] zoom out
+# map a zoom out
+
+# Map operation key
+map <C-e> scroll down
+map <C-y> scroll up
+
+map u scroll half-down
+map i scroll half-up
+
