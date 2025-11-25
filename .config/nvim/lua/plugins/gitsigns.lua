@@ -4,17 +4,44 @@ return {
     config = function()
       require("gitsigns").setup({
         signs = {
-          add = { hl = "GitGutterAdd", text = "│", numhl = "GitSignsAddNr" },
-          change = { hl = "GitGutterChange", text = "│", numhl = "GitSignsChangeNr" },
-          delete = { hl = "GitGutterDelete", text = "_", numhl = "GitSignsDeleteNr" },
-          topdelete = { hl = "GitGutterDelete", text = "‾", numhl = "GitSignsDeleteNr" },
-          changedelete = { hl = "GitGutterChange", text = "~", numhl = "GitSignsChangeNr" },
+          add          = { text = '|' },
+          change       = { text = '|' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
         },
+        signs_staged = {
+          add          = { text = '|' },
+          change       = { text = '|' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        },
+        signs_staged_enable = true,
         numhl = true,
         linehl = false,
         _threaded_diff = true,
-        watch_gitdir = { interval = 1000 },
-        update_debounce = 100, -- default 100ms
+        watch_gitdir = { 
+            enable = true,
+            follow_files = true,
+            interval = 3000
+        },
+        current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+          delay = 500,
+          ignore_whitespace = false,
+          virt_text_priority = 100,
+          use_focus = true,
+        },
+        current_line_blame_formatter = '<author>, <author_time:%R> - <summary>',
+        sign_priority = 6,
+        update_debounce = 100,
+        status_formatter = nil, -- Use default
+        max_file_length = 40000, -- Disable if file is longer than this (in lines)
         on_attach = function(bufnr)
           local gs = package.loaded.gitsigns
           local map = function(mode, lhs, rhs)

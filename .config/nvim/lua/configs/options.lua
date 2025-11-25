@@ -7,11 +7,12 @@ vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.o.wrap = false
 vim.g.mapleader = " "
-vim.o.cmdheight = 0
+vim.o.cmdheight = 1
 vim.o.laststatus = 3
 vim.opt.showcmdloc = 'statusline'
 vim.o.showmode = false
 vim.lsp.set_log_level("ERROR")
+vim.g.fzf_layout = { window = {width = 0.8, height = 0.9 } }
 
 -- parse .pro file as shell
 vim.api.nvim_create_augroup("tshark_filetype", { clear = true })

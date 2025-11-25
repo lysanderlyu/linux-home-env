@@ -47,21 +47,23 @@ vim.keymap.set('n', ';d', delete_n_lines, { desc = "Delete N lines to clipboard"
 vim.keymap.set("v", "';", '"+y', { desc = "Yank to system clipboard" })
 vim.keymap.set({"n", "v"}, ";'", '"+p', { desc = "Paste from system clipboard" })
 
+-- shortcut for select the whole line (without the space on the head and tail)
+vim.keymap.set("n", "vl", '^vg_', { desc = "Select whole line" })
 
 -- Telescope file finder
-vim.keymap.set("n", "<leader>fb", builtin.buffers, opts)
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, opts)
-vim.keymap.set("n", "<leader>fr", builtin.oldfiles, opts)
+vim.keymap.set("n", "<leader>sh", builtin.help_tags, opts)
 
 -- Fzf finder
 vim.api.nvim_set_keymap('n', '<leader>ff', ':Files<CR>', { noremap = true, silent = true })
 
 -- telescope Git
-vim.keymap.set("n", "<leader>gD", builtin.git_status, opts)
+vim.keymap.set("n", "<leader>go", builtin.git_status, opts)
 vim.keymap.set("n", "<leader>gb", builtin.git_branches, opts)
 
 -- fugitive
 vim.keymap.set("n", "<leader>gs", ":Git<CR>")           -- git status
+vim.keymap.set("n", "<leader>gS", ":Git stash<CR>")           -- git stash 
+vim.keymap.set("n", "<leader>gSp", ":Git stash pop<CR>")           -- git stash pop
 vim.keymap.set("n", "<leader>gcm", ":Git commit<CR>")    -- commit
 vim.keymap.set("n", "<leader>gp", ":Git pull<CR>")      -- push
 local function current_branch()
@@ -80,17 +82,18 @@ vim.keymap.set("n", "<leader>gP", function()
     print("Not in a git repository!")
   end
 end, { silent = true })
-vim.keymap.set("n", "<leader>gl", ":Git log --graph -1000<CR>")       -- log
-vim.keymap.set("n", "<leader>gla", ":Git log --graph --all -1000<CR>")       -- log
-vim.keymap.set("n", "<leader>glt", ":Git log -1 HEAD<CR>")       -- log
+vim.keymap.set("n", "<leader>gL", ":Git log --graph -1000<CR>")       -- log
+vim.keymap.set("n", "<leader>gLa", ":Git log --graph --all -1000<CR>")       -- log
 vim.keymap.set("n", "<leader>gbl", ":Git blame<CR>")     -- blame
 vim.keymap.set("n", "<leader>ga", ":Git add %<CR>")
+vim.keymap.set("n", "<leader>gA", ":Git add -A<CR>")
 vim.keymap.set("n", "<leader>gco", ":Git checkout %<CR>")
 vim.keymap.set("n", "<leader>gd", ":Gdiffsplit<CR>")
 vim.keymap.set("n", "<leader>gr", ":Git reset --mixed -- %<CR>")
 vim.keymap.set("n", "<leader>gra", ":Git reset --mixed<CR>")
 vim.keymap.set("n", "<leader>grs", ":Git reset --soft HEAD~1<CR>")
 vim.keymap.set("n", "<leader>grd", ":Git reset --hard HEAD~1<CR>")
+vim.keymap.set("n", "<leader>grb", ":Git rebase -i --fork-point<CR>")   -- Rebase the current branch from where it was born
 
 -- LSP
 vim.keymap.set("n", "gi", builtin.lsp_implementations, opts)
@@ -187,3 +190,66 @@ vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
 vim.keymap.set("n", "<leader>B", function() dap.set_breakpoint(vim.fn.input("Breakpoint condition: ")) end)
 vim.keymap.set("n", "<leader>dr", dap.repl.open)
 vim.keymap.set("n", "<leader>dl", dap.run_last)
+
+-- For diff with a specific commit
+vim.keymap.set("n", "<leader>gD", function()
+  -------------------------------------------------------
+  -- 1. Validate the current buffer
+  -------------------------------------------------------
+  local file = vim.fn.expand("%:p")
+  local filetype = vim.fn.getftype(file)
+
+  if file == "" or filetype ~= "file" then
+    vim.notify("Current cursor is NOT on a valid file", vim.log.levels.ERROR)
+    return
+  end
+
+  -------------------------------------------------------
+  -- 2. Get repo root
+  -------------------------------------------------------
+  local dirname = vim.fn.expand("%:h")
+  local repo_path = vim.fn.systemlist(
+    "git -C " .. vim.fn.shellescape(dirname) .. " rev-parse --show-toplevel"
+  )[1]
+
+  if repo_path == nil or repo_path == "" then
+    vim.notify("Not inside a Git repository", vim.log.levels.ERROR)
+    return
+  end
+
+  -------------------------------------------------------
+  -- 3. Get file path relative to repo root
+  -------------------------------------------------------
+  local rel_file = file:gsub(repo_path .. "/", "")
+
+  if rel_file == file then
+    vim.notify("Unable to convert file path to repo-relative", vim.log.levels.ERROR)
+    return
+  end
+
+  -------------------------------------------------------
+  -- 4. Open Snacks git_log_file picker
+  -------------------------------------------------------
+  Snacks.picker.git_log_file({
+    confirm = function(picker, item)
+      picker:close()
+
+      ---------------------------------------------------
+      -- 5. Validate commit object
+      ---------------------------------------------------
+      local hash = item.oid or item.commit
+      if not hash then
+        vim.notify("No valid commit selected", vim.log.levels.ERROR)
+        return
+      end
+
+      ---------------------------------------------------
+      -- 6. Diff commit version of this file
+      ---------------------------------------------------
+      vim.schedule(function()
+        local target = hash .. ":" .. rel_file
+        vim.cmd("Gvdiffsplit " .. vim.fn.fnameescape(target))
+      end)
+    end,
+  })
+end, { desc = "Git log → Diff commit for current file" })
