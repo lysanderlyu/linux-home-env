@@ -52,6 +52,10 @@ wkular() {
     command nohup okular "$path" > /dev/null 2>&1 &
 }
 
+V2rayN() {
+    command nohup v2rayN > /dev/null 2>&1 &
+}
+
 calcmem() {
     local process_name="${1:-bash}"
     local pids
