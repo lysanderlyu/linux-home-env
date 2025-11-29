@@ -8,11 +8,24 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+# Homebrew (Apple Silicon)
+if type brew &>/dev/null; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
     if [ -f "$HOME/.bashrc" ]; then
 	. "$HOME/.bashrc"
+    fi
+fi
+
+# if running zsh
+if [ -n "$ZSH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.zshrc" ]; then
+	. "$HOME/.zshrc"
     fi
 fi
 

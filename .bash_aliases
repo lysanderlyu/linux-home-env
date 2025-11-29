@@ -1,10 +1,18 @@
 #!/bin/bash
 
-alias ll='ls -1vFAlh'
-alias la='ls -vhA'
-alias l='ls -1vhCF'
+if [ -n "$BASH_VERSION" ]; then
+    alias cat='batcat -P'
+    alias ll='ls -1vFAlh'
+    alias la='ls -vhA'
+    alias l='ls -1vhCF'
+    alias apt='sudo apt'
+else
+    alias apt='brew'
+    alias ll='ls -1vFAlhG'
+    alias la='ls -vhAG'
+    alias l='ls -1vhCFG'
+fi
 alias c='clear'
-alias cat='batcat -P'
 alias du1='du -hd 1'
 alias lsb='lsblk -af'
 alias lu='lsusb'
@@ -17,7 +25,6 @@ alias umount='sudo umount -v'
 alias dmesg='sudo dmesg -e'
 alias journalctl='sudo journalctl'
 alias fdisk='sudo fdisk'
-alias apt='sudo apt'
 alias man1='tldr'
 alias pip='python3 -m pipi'
 alias dd='sudo dd status=progress'
