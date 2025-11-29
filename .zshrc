@@ -29,3 +29,16 @@ export TERM="xterm-256color"
 # ---------------------------
 export HOMEBREW_COLOR=1
 export TERM="xterm-256color"
+
+
+# Export some path
+export Android156=$HOME/mnt/Android156                                                                                                                                                                            
+export RealbomFTP=$HOME/mnt/RealbomFTP                                                                                                                                                                            
+export Learning=$HOME/mnt/Win10/Learning                                                                                                                                                                         
+export Data=$HOME/mnt/Win10/Data                                                                                                                                                                         
+export Other=$HOME/mnt/Win10/Other                                                                                                                                                                         
+export System=$HOME/mnt/Win10/System                                                                                                                                                                               
+export GDriver=$HOME/mnt/GDriver                                                                                                                                                                               
+export RBDebian=$HOME/mnt/RBDebian                                                                                                                                                                                    
+                                                                                                                                                                                                             
+export LFS=$HOME/mnt/LFS                                                                                                                                                                                          
