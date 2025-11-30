@@ -6,11 +6,15 @@ if [ -n "$BASH_VERSION" ]; then
     alias la='ls -vhA'
     alias l='ls -1vhCF'
     alias apt='sudo apt'
+    alias copy='wl-copy'
+    alias paste="wl-paste | grep -v '^$'"
 else
     alias apt='brew'
     alias ll='ls -1vFAlhG'
     alias la='ls -vhAG'
     alias l='ls -1vhCFG'
+    alias copy='pbcopy'
+    alias paste="pbpaste"
 fi
 alias c='clear'
 alias du1='du -hd 1'
@@ -32,9 +36,7 @@ alias rsync='rsync --progress'
 alias watch='watch -n 0.1'
 alias find2='find ./ -name'
 alias find1='find ./ -iname'
-alias wlc='wl-copy'
-alias wlp="wl-paste | grep -v '^$'"
-alias fzf='fzf|wlc'
+alias fzf='fzf|copy'
 alias odiff='TMPDIR=/run/shm diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
 alias hdiff='TMPDIR=/home/lysander/tmp/ diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
 alias rkLinuxUgTool='sudo rkLinuxUgTool'
@@ -50,12 +52,12 @@ tolphin() {
 }
 
 wathura() {
-    path=$(wlp)
+    path=$(paste)
     command nohup zathura "$path" > /dev/null 2>&1 &
 }
 
 wkular() {
-    path=$(wlp)
+    path=$(paste)
     command nohup okular "$path" > /dev/null 2>&1 &
 }
 
