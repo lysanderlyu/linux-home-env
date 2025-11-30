@@ -9,7 +9,7 @@ if [ -n "$BASH_VERSION" ]; then
     alias copy='wl-copy'
     alias paste="wl-paste | grep -v '^$'"
 else
-    alias apt='brew'
+    alias apt='/opt/homebrew/bin/brew'
     # External Homebrew on /Volumes/Apps/Homebrew
     function Apt() {
         # Temporarily set environment variables for this session
