@@ -8,6 +8,12 @@ if [ -n "$BASH_VERSION" ]; then
     alias apt='sudo apt'
     alias copy='wl-copy'
     alias paste="wl-paste | grep -v '^$'"
+
+    wathura() {
+        file_path=$(wl-paste)
+        command nohup zathura "$file_path" > /dev/null 2>&1 &
+    }
+
 else
     alias apt='/opt/homebrew/bin/brew'
     # External Homebrew on /Volumes/Apps/Homebrew
@@ -19,6 +25,18 @@ else
     
         # Prepend external Homebrew bin to PATH for this command only
         PATH=/Volumes/Apps/Homebrew/bin:$PATH /Volumes/Apps/Homebrew/bin/brew "$@"
+    }
+
+    wathura() {
+        file_path=$(pbpaste | tr -d '\r\n')
+        # Check if path is non-empty
+        if [ -z "$file_path" ]; then
+            echo "Clipboard is empty!"
+            return 1
+        fi
+    
+        # Open Zathura in background
+        command nohup zathura "$file_path" > /dev/null 2>&1 &
     }
 
     alias ll='ls -1vFAlhG'
@@ -62,14 +80,10 @@ tolphin() {
     command nohup dolphin "$@" > /dev/null 2>&1 &
 }
 
-wathura() {
-    path=$(paste)
-    command nohup zathura "$path" > /dev/null 2>&1 &
-}
 
 wkular() {
-    path=$(paste)
-    command nohup okular "$path" > /dev/null 2>&1 &
+    file_path=$(paste)
+    command nohup okular "$file_path" > /dev/null 2>&1 &
 }
 
 V2rayN() {

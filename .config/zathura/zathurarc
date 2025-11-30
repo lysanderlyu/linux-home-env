@@ -7,7 +7,7 @@ set sandbox none		 # Disable sandbox while open web link
 #set guioptions "none"              # Clean UI
 set smooth-scroll true
 set scroll-step 40                 # Smooth scrolling
-set font "SF Pro Regular 11"
+set font "SF Pro Regular 15"
 
 set preload true               # Load pages in background
 set selection-clipboard clipboard
@@ -24,8 +24,8 @@ map o toggle_index            # Correct fullscreen toggle
 map c recolor                      # Color inversion
 
 # Set windows size
-set window-width 1720
-set window-height 1350
+set window-width 1400
+set window-height 1300
 set window-title-basename true
 #set adjust-open "width"         # Fit width on open
 
