@@ -10,11 +10,22 @@ if [ -n "$BASH_VERSION" ]; then
     alias paste="wl-paste | grep -v '^$'"
 else
     alias apt='brew'
+    # External Homebrew on /Volumes/Apps/Homebrew
+    function Apt() {
+        # Temporarily set environment variables for this session
+        export HOMEBREW_PREFIX=/Volumes/Apps/Homebrew
+        export HOMEBREW_CELLAR=/Volumes/Apps/Homebrew/Cellar
+        export HOMEBREW_REPOSITORY=/Volumes/Apps/Homebrew
+    
+        # Prepend external Homebrew bin to PATH for this command only
+        PATH=/Volumes/Apps/Homebrew/bin:$PATH /Volumes/Apps/Homebrew/bin/brew "$@"
+    }
+
     alias ll='ls -1vFAlhG'
     alias la='ls -vhAG'
     alias l='ls -1vhCFG'
     alias copy='pbcopy'
-    alias paste="pbpaste"
+    alias paste="pbpaste | tr -d '\n'"
 fi
 alias c='clear'
 alias du1='du -hd 1'

@@ -14,20 +14,19 @@ if type brew &>/dev/null; then
 fi
 
 # if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
+# include .bashrc if it exists
+if [ -f "$HOME/.bashrc" ]; then
+    . "$HOME/.bashrc"
 fi
 
 # if running zsh
-if [ -n "$ZSH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.zshrc" ]; then
-	. "$HOME/.zshrc"
-    fi
+# include .bashrc if it exists
+if [ -f "$HOME/.zshrc" ]; then
+    . "$HOME/.zshrc"
 fi
+
+# set PATH so it includes external disk bin if it exists
+PATH="$HOME/Apps/Homebrew/bin:$PATH"
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
