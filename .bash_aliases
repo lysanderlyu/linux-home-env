@@ -42,7 +42,7 @@ else
     alias ll='ls -1vFAlhG'
     alias la='ls -vhAG'
     alias l='ls -1vhCFG'
-    alias copy='pbcopy'
+    alias copy="tr -d '\r\n' | pbcopy"
     alias paste="pbpaste | tr -d '\n'"
 fi
 alias c='clear'
