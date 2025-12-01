@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Hostnames → macOS can resolve these directly
+rbWin10="rbWin10"
+android156="android156"
+rbdebian="rbdebian"
+
+# Share passwords
+android156_pass="realbom"
+rbWin10_pass="856312"
+
+# Mount points
+# Android156="$HOME/mnt/android156"
+# RBDebian="$HOME/mnt/rbdebian"
+# System="$HOME/mnt/System"
+# Learning="$HOME/mnt/Learning"
+# Other="$HOME/mnt/Other"
+# Data="$HOME/mnt/Data"
+# Wsl="$HOME/mnt/Wsl"
+
+# Ensure dirs exist
+mkdir -p "$Android156" "$RBDebian" "$System" "$Learning" "$Other" "$Data"
+
+# macOS SMB mount syntax:
+# mount_smbfs "//user:pass@hostname/share" /Local/MountPoint
+
+ping_ok() {
+    ping -t 1 "$1" 2>/dev/null | grep -q "1 packets"
+}
+
+testAndMountAndroid() {
+    if ping_ok "$android156"; then
+        echo "android156 online, mounting..."
+        if ! mount | grep -q "$Android156"; then
+            mount_smbfs "//yclv:${android156_pass}@${android156}/work_yclv" "$Android156"
+        fi
+        echo "android156 mounted."
+    fi
+}
+
+testAndMountRBDebian() {
+    if ping_ok "$rbdebian"; then
+        echo "rbdebian online, mounting..."
+        if ! mount | grep -q "$RBDebian"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${rbdebian}/Home" "$RBDebian"
+        fi
+        echo "rbdebian mounted."
+    fi
+}
+
+testAndMountRBWin10() {
+    if ping_ok "$rbWin10"; then
+        echo "rbWin10 online, mounting..."
+
+        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/System"   "$System"
+        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Learning" "$Learning"
+        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Other"    "$Other"
+        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Data"     "$Data"
+
+        # SSHFS works the same on macOS if you installed it via brew (osxfuse + sshfs)
+        # sshfs -o allow_other -p 20222 lysander@"${rbWin10}":/home/lysander "$Wsl"
+
+        echo "rbWin10 mounted."
+    fi
+}
+
+testAndMountAndroid
+testAndMountRBDebian
+testAndMountRBWin10
