@@ -8,6 +8,8 @@ if [ -n "$BASH_VERSION" ]; then
     alias apt='sudo apt'
     alias copy='wl-copy'
     alias paste="wl-paste | grep -v '^$'"
+    alias lu='lsusb'
+    alias lsb='lsblk -af'
 
     wathura() {
         file_path=$(wl-paste)
@@ -15,6 +17,8 @@ if [ -n "$BASH_VERSION" ]; then
     }
 
 else
+    alias lsb='diskutil list'
+    alias lu='system_profiler SPUSBDataType'
     alias apt='/opt/homebrew/bin/brew'
     # External Homebrew on /Volumes/Apps/Homebrew
     function Apt() {
@@ -47,8 +51,6 @@ else
 fi
 alias c='clear'
 alias du1='du -hd 1'
-alias lsb='lsblk -af'
-alias lu='lsusb'
 alias fh='df -ah'
 alias minicom1='sudo minicom -c on -D /dev/ttyUSB0 -b 115200'
 alias minicom2='sudo minicom -c on -D /dev/ttyUSB1 -b 115200'
