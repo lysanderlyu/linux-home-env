@@ -19,13 +19,14 @@ rbWin10_pass="856312"
 # Wsl="$HOME/mnt/Wsl"
 
 # Ensure dirs exist
-mkdir -p "$Android156" "$RBDebian" "$System" "$Learning" "$Other" "$Data"
+# mkdir -p "$Android156" "$RBDebian" "$System" "$Learning" "$Other" "$Data"
 
 # macOS SMB mount syntax:
 # mount_smbfs "//user:pass@hostname/share" /Local/MountPoint
 
 ping_ok() {
-    ping -t 1 "$1" 2>/dev/null | grep -q "1 packets"
+    # ping -t 1 "$1" 2>/dev/null | grep -q "1 packets"
+    ping -c 1 -W 1000 "$1" >/dev/null 2>&1
 }
 
 testAndMountAndroid() {
@@ -52,11 +53,18 @@ testAndMountRBWin10() {
     if ping_ok "$rbWin10"; then
         echo "rbWin10 online, mounting..."
 
-        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/System"   "$System"
-        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Learning" "$Learning"
-        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Other"    "$Other"
-        mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Data"     "$Data"
-
+        if ! mount | grep -q "$System"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/System"   "$System"
+        fi
+        if ! mount | grep -q "$Learning"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Learning" "$Learning"
+        fi
+        if ! mount | grep -q "$Other"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Other"    "$Other"
+        fi
+        if ! mount | grep -q "$Data"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Data"     "$Data"
+        fi
         # SSHFS works the same on macOS if you installed it via brew (osxfuse + sshfs)
         # sshfs -o allow_other -p 20222 lysander@"${rbWin10}":/home/lysander "$Wsl"
 
