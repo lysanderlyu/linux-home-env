@@ -11,6 +11,7 @@ if [ -n "$BASH_VERSION" ]; then
     alias lu='lsusb'
     alias lsb='lsblk -af'
 
+    alias rkLinuxUgTool='sudo rkLinuxUgTool'
     wathura() {
         file_path=$(wl-paste)
         command nohup zathura "$file_path" > /dev/null 2>&1 &
@@ -42,7 +43,6 @@ else
         # Open Zathura in background
         command nohup zathura "$file_path" > /dev/null 2>&1 &
     }
-
     alias ll='ls -1vFAlhG'
     alias la='ls -vhAG'
     alias l='ls -1vhCFG'
@@ -70,7 +70,6 @@ alias find1='find ./ -iname'
 alias fzf='fzf|copy'
 alias odiff='TMPDIR=/run/shm diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
 alias hdiff='TMPDIR=/home/lysander/tmp/ diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
-alias rkLinuxUgTool='sudo rkLinuxUgTool'
 alias dolphin='dolphin > /dev/null 2>&1 &'
 alias zathura='zathura'
 alias wssh='ssh -p 20222'
