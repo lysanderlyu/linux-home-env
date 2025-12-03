@@ -4,7 +4,7 @@ font-size = 15
 # font-family = "SF Mono"
 font-family = "Monaco"
 font-thicken
-font-thicken-strength = 255
+font-thicken-strength = 128
 
 # Theme setting
 # theme = "Nvim Light"
