@@ -20,14 +20,12 @@ window-height = 600
 # macos-icon = microchip
 macos-icon = blueprint
 
-# Key binding
+# Keyboard binding
 keybind = super+0=goto_tab:10
 keybind = super+-=goto_tab:11
 
 keybind = ctrl+shift+arrow_left=previous_tab
 keybind = ctrl+shift+arrow_right=next_tab
 
-# Right-click: paste
-# keybind = performable:mouse-2=paste_from_clipboard
-# Shift + Right-click: copy selection
-# keybind = performable:shift+mouse-2=copy_to_clipboard
+# Mouse setting
+right-click-action = copy-or-paste
