@@ -93,6 +93,9 @@ alias zathura='zathura'
 alias wssh='ssh -p 20222'
 alias wscp='scp -P 20222'
 
+man(){
+    command nvim -n -c "Man $*" -c "wincmd o"
+}
 
 #For command line launch
 colphin() {
