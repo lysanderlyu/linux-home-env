@@ -17,10 +17,15 @@ theme = "Tomorrow Night"
 # Window setting
 window-width = 1200
 window-height = 600
+window-save-state = always
+window-title-font-family = "Monaco"
+window-inherit-working-directory = true
+
 # macos-icon = microchip
 macos-icon = blueprint
 
 # Keyboard binding
+keybind = super+9=goto_tab:9
 keybind = super+0=goto_tab:10
 keybind = super+-=goto_tab:11
 
