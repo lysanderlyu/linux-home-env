@@ -49,7 +49,7 @@ else
         fi
     
         # Open Zathura in background
-        command nohup zathura "$file_path" > /dev/null 2>&1 &
+        command nohup zathura --mode fullscreen "$file_path" > /dev/null 2>&1 &
     }
     alias ll='ls -1vFAlhG'
     alias la='ls -vhAG'
@@ -71,7 +71,7 @@ else
 
     # alias minicom1='sudo minicom -D /dev/ttyUSB0 -b 115200 -c on'
     # alias minicom2='sudo minicom -D /dev/ttyUSB1 -b 115200 -c on '
-    alias minicom3='sudo minicom -D /dev/tty.usbserial-11440 -b 1500000 -c on '
+    alias minicom3='sudo minicom -D "/dev/tty.usbserial-11440" -b 1500000 -c on '
 fi
 alias c='clear'
 alias du1='du -hd 1'

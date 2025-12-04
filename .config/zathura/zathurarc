@@ -17,28 +17,45 @@ set zoom-center true
 set zoom-step 10
 set adjust-open best-fit
 
-# ===== PROVEN KEYBINDINGS =====
-# View Modes
-map w toggle_fullscreen            # Correct fullscreen toggle
-map o toggle_index            # Correct fullscreen toggle
-map c recolor                      # Color inversion
-
 # Set windows size
 set window-width 1400
 set window-height 1300
 set window-title-basename true
+
+# set window-title-format "%f - Zathura"   # %f = filename
 #set adjust-open "width"         # Fit width on open
+# ===== PROVEN KEYBINDINGS =====
+# View Modes
+map [fullscreen] w toggle_fullscreen            # Correct fullscreen toggle
+map [fullscreen] o toggle_index            # Correct fullscreen toggle
+map [fullscreen] c recolor                      # Color inversion
 
 # Zoom Controls
-map [ zoom in
-# map s zoom in
-map ] zoom out
-# map a zoom out
+map [fullscreen] [ zoom in
+# map [fullscreen] s zoom in
+map [fullscreen] ] zoom out
+# map [fullscreen] a zoom out
 
 # Map operation key
-map <C-e> scroll down
-map <C-y> scroll up
+map [fullscreen] <C-e> scroll down
+map [fullscreen] <C-y> scroll up
 
-map u scroll half-down
-map i scroll half-up
+map [fullscreen] u scroll half-down
+map [fullscreen] i scroll half-up
 
+map [normal] w toggle_fullscreen            # Correct fullscreen toggle
+map [normal] o toggle_index            # Correct fullscreen toggle
+map [normal] c recolor                      # Color inversion
+
+# Zoom Controls
+map [normal] [ zoom in
+# map [normal] s zoom in
+map [normal] ] zoom out
+# map [normal] a zoom out
+
+# Map operation key
+map [normal] <C-e> scroll down
+map [normal] <C-y> scroll up
+
+map [normal] u scroll half-down
+map [normal] i scroll half-up
