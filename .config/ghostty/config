@@ -29,6 +29,9 @@ keybind = super+9=goto_tab:9
 keybind = super+0=goto_tab:10
 keybind = super+-=goto_tab:11
 
+keybind = super++=increase_font_size:1.5
+keybind = super+alt++=decrease_font_size:1.5
+
 keybind = ctrl+shift+arrow_left=previous_tab
 keybind = ctrl+shift+arrow_right=next_tab
 
