@@ -98,8 +98,13 @@ man(){
 }
 
 #For command line launch
-colphin() {
+tolphin() {
     command nohup dolphin "$@" > /dev/null 2>&1 &
+}
+
+#For ghostty on linux
+Ghostty() {
+    command nohup ghostty > /dev/null 2>&1 & exit
 }
 
 
