@@ -8,11 +8,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# Homebrew (Apple Silicon)
-if type brew &>/dev/null; then
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-fi
-
 # if running bash
 # include .bashrc if it exists
 if [ -f "$HOME/.bashrc" ]; then
@@ -25,7 +20,14 @@ if [ -f "$HOME/.zshrc" ]; then
     . "$HOME/.zshrc"
 fi
 
-# set PATH so it includes external disk bin if it exists
+# set the PATH of CLT line tools after Homebrew
+PATH="/Library/Developer/CommandLineTools/usr/bin:$PATH"
+
+# Set ruby path
+PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+PATH="/opt/homebrew/lib/ruby/gems/3.4.0/bin:$PATH"
+
+# set PATH so it includes external disk bin if it exists before the CLT
 PATH="$HOME/Apps/Homebrew/bin:$PATH"
 
 # set PATH so it includes user's private bin if it exists

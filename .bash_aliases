@@ -16,6 +16,7 @@ if [ -n "$BASH_VERSION" ]; then
     alias dmesg='sudo dmesg -e'
     alias odiff='TMPDIR=/run/shm diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
     alias hdiff='TMPDIR=/home/lysander/tmp/ diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
+    alias journalctl='sudo journalctl'
     alias rkLinuxUgTool='sudo rkLinuxUgTool'
 
     cathura() {
@@ -27,17 +28,63 @@ else
     alias dmesg='sudo dmesg'
     alias lsb='diskutil list'
     alias lu='system_profiler SPUSBDataType'
-    alias apt='/opt/homebrew/bin/brew'
+
+    function apt(){
+        export HOMEBREW_PREFIX="/opt/homebrew";
+        export HOMEBREW_CELLAR="/opt/homebrew/Cellar";
+        export HOMEBREW_REPOSITORY="/opt/homebrew";
+        export HOMEBREW_INFO="/opt/homebrew/share/info"
+
+        fpath[1,0]="/opt/homebrew/share/zsh/site-functions";
+        eval "$(/usr/bin/env PATH_HELPER_ROOT="/opt/homebrew" /usr/libexec/path_helper -s)"
+        [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
+
+        # Only prepend if it's not already in INFOPATH
+        if ! echo "$INFOPATH" | tr ':' '\n' | grep -qx "$HOMEBREW_INFO"; then
+            export INFOPATH="$HOMEBREW_INFO${INFOPATH:+:$INFOPATH}"
+        fi
+
+        # Prepend external Homebrew bin to PATH for this command only
+        $HOMEBREW_REPOSITORY/bin/brew "$@"
+    }
     alias odiff='TMPDIR=/tmp diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
+    alias journalctl='sudo log show'
+
     # External Homebrew on /Volumes/Apps/Homebrew
     function Apt() {
         # Temporarily set environment variables for this session
-        export HOMEBREW_PREFIX=/Volumes/Apps/Homebrew
-        export HOMEBREW_CELLAR=/Volumes/Apps/Homebrew/Cellar
-        export HOMEBREW_REPOSITORY=/Volumes/Apps/Homebrew
-    
+        export HOMEBREW_PREFIX="/Volumes/Apps/Homebrew";
+        export HOMEBREW_CELLAR="/Volumes/Apps/Homebrew/Cellar";
+        export HOMEBREW_REPOSITORY="/Volumes/Apps/Homebrew";
+        export HOMEBREW_INFO="/Volumes/Apps/Homebrew/share/info"
+
+        fpath[1,0]="/Volumes/Apps/Homebrew/share/zsh/site-functions";
+        eval "$(/usr/bin/env PATH_HELPER_ROOT="/Volumes/Apps/Homebrew" /usr/libexec/path_helper -s)"
+        [ -z "${MANPATH-}" ] || export MANPATH=":${MANPATH#:}";
+
+        # Only prepend if it's not already in INFOPATH
+        if ! echo "$INFOPATH" | tr ':' '\n' | grep -qx "$HOMEBREW_INFO"; then
+            export INFOPATH="$HOMEBREW_INFO${INFOPATH:+:$INFOPATH}"
+        fi
+
         # Prepend external Homebrew bin to PATH for this command only
-        PATH=/Volumes/Apps/Homebrew/bin:$PATH /Volumes/Apps/Homebrew/bin/brew "$@"
+        $HOMEBREW_PREFIX/bin/brew "$@"
+    }
+
+    function mpt() {
+        # Set MacPorts environment
+        export MACPORTS_PREFIX="/opt/local"
+        export PATH="$MACPORTS_PREFIX/bin:$MACPORTS_PREFIX/sbin:$PATH"
+        export MANPATH="$MACPORTS_PREFIX/share/man:${MANPATH:-}"
+        export MACPORTS_INFO="$MACPORTS_PREFIX/share/info"
+
+        # Only prepend if it's not already in INFOPATH
+        if ! echo "$INFOPATH" | tr ':' '\n' | grep -qx "$MACPORTS_INFO"; then
+            export INFOPATH="$MACPORTS_INFO${INFOPATH:+:$INFOPATH}"
+        fi
+    
+        # Run MacPorts command
+        sudo /opt/local/bin/port "$@"
     }
 
     cathura() {
@@ -51,6 +98,7 @@ else
         # Open Zathura in background
         command nohup zathura --mode fullscreen "$file_path" > /dev/null 2>&1 &
     }
+
     alias ll='ls -1vFAlhG'
     alias la='ls -vhAG'
     alias l='ls -1vhCFG'
@@ -69,27 +117,37 @@ else
         open -a wpsoffice "$file_path"
     }
 
-    # alias minicom1='sudo minicom -D /dev/ttyUSB0 -b 115200 -c on'
-    # alias minicom2='sudo minicom -D /dev/ttyUSB1 -b 115200 -c on '
-    alias minicom3='sudo minicom -D "/dev/tty.usbserial-11440" -b 1500000 -c on '
+    cypora() {
+        file_path=$(pbpaste | tr -d '\r\n')
+        # Check if path is non-empty
+        if [ -z "$file_path" ]; then
+            echo "Clipboard is empty!"
+            return 1
+        fi
+    
+        # Open Zathura in background
+        open -a typora "$file_path"
+    }
+
+    # Mac port only packages
+    svn2git() {
+        PATH="/opt/local/bin:/opt/local/sbin:$PATH" /opt/local/bin/svn-all-fast-export "$@"
+    }
+    alias minicom3='sudo minicom -D "/dev/tty.usbserial-12440" -b 1500000 -c on '
 fi
 alias c='clear'
 alias du1='du -hd 1'
 alias fh='df -ah'
 alias mount='sudo mount -v'
 alias umount='sudo umount -v'
-alias journalctl='sudo journalctl'
 alias fdisk='sudo fdisk'
 alias man1='tldr'
 alias pip='python3 -m pipi'
 alias dd='sudo dd status=progress'
 alias rsync='rsync --progress'
 alias watch='watch -n 0.1'
-alias find2='find ./ -name'
-alias find1='find ./ -iname'
 alias fzf='fzf|copy'
 alias dolphin='dolphin > /dev/null 2>&1 &'
-alias zathura='zathura'
 alias wssh='ssh -p 20222'
 alias wscp='scp -P 20222'
 

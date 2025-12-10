@@ -24,12 +24,6 @@ zstyle ':completion:*' insecure
 # ---------------------------
 export HOMEBREW_COLOR=1
 export TERM="xterm-256color"
-# ---------------------------
-# Environment variables
-# ---------------------------
-export HOMEBREW_COLOR=1
-export TERM="xterm-256color"
-
 
 # Export some path
 export Android156=$HOME/mnt/Android156                                                                                                                                                                            
@@ -40,12 +34,8 @@ export Other=$HOME/mnt/Win10/Other
 export System=$HOME/mnt/Win10/System                                                                                                                                                                               
 export GDriver=$HOME/mnt/GDriver                                                                                                                                                                               
 export RBDebian=$HOME/mnt/RBDebian                                                                                                                                                                                    
+export ArmWin11_Dev=$HOME/mnt/ArmWin11/Dev                                                                                                                                                                                    
                                                                                                                                                                                                              
 export LFS=$HOME/mnt/LFS                                                                                                                                                                                          
 
-# brew qt5 on macos
-export PATH="/opt/homebrew/opt/qt@5/bin:$PATH"
-export LDFLAGS="-L/opt/homebrew/opt/qt@5/lib"
-export CPPFLAGS="-I/opt/homebrew/opt/qt@5/include"
-export PKG_CONFIG_PATH="/opt/homebrew/opt/qt@5/lib/pkgconfig"
-export CMAKE_PREFIX_PATH="/opt/homebrew/opt/qt@5"
+export SVN_SSL_NO_VERIFY=true
