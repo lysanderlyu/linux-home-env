@@ -4,6 +4,7 @@
 rbWin10="rbWin10"
 android156="android156"
 rbdebian="rbdebian"
+arm_win11="arm-win11"
 
 # Share passwords
 android156_pass="realbom"
@@ -72,6 +73,18 @@ testAndMountRBWin10() {
     fi
 }
 
+testAndMountArmWin11() {
+    if ping_ok "${arm_win11}"; then
+        echo "arm-win11 online, mounting..."
+
+        if ! mount | grep -q "$ArmWin11_Dev"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${arm_win11}/Dev"   "${ArmWin11_Dev}"
+        fi
+        echo "arm-win11 mounted."
+    fi
+}
+
 testAndMountAndroid
 testAndMountRBDebian
 testAndMountRBWin10
+testAndMountArmWin11
