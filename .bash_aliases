@@ -134,6 +134,8 @@ else
         PATH="/opt/local/bin:/opt/local/sbin:$PATH" /opt/local/bin/svn-all-fast-export "$@"
     }
     alias minicom3='sudo minicom -D "/dev/tty.usbserial-12440" -b 1500000 -c on '
+    alias screen3='screen "/dev/tty.usbserial-12440" 1500000'
+    alias picocom3='sudo picocom "/dev/tty.usbserial-12440" -b 1500000'
 fi
 alias c='clear'
 alias du1='du -hd 1'
