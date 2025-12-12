@@ -39,3 +39,4 @@ export ArmWin11_Dev=$HOME/mnt/ArmWin11/Dev
 export LFS=$HOME/mnt/LFS                                                                                                                                                                                          
 
 export SVN_SSL_NO_VERIFY=true
+export LIMA_HOME=$HOME/lima/
