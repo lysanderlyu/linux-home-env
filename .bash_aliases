@@ -153,12 +153,12 @@ alias dolphin='dolphin > /dev/null 2>&1 &'
 alias wssh='ssh -p 20222'
 alias wscp='scp -P 20222'
 
-man(){
+man2(){
     command nvim -n -c "Man $*" -c "wincmd o"
 }
 
 #For command line launch
-tolphin() {
+colphin() {
     command nohup dolphin "$@" > /dev/null 2>&1 &
 }
 
