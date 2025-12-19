@@ -34,9 +34,16 @@ export Other=$HOME/mnt/Win10/Other
 export System=$HOME/mnt/Win10/System                                                                                                                                                                               
 export GDriver=$HOME/mnt/GDriver                                                                                                                                                                               
 export RBDebian=$HOME/mnt/RBDebian                                                                                                                                                                                    
+export Ubuntu=$HOME/mnt/Ubuntu                                                                                                                                                                                    
+export Ubuntu2204=$HOME/mnt/Ubuntu2204                                                                                                                                                                                    
 export ArmWin11_Dev=$HOME/mnt/ArmWin11/Dev                                                                                                                                                                                    
                                                                                                                                                                                                              
 export LFS=$HOME/mnt/LFS                                                                                                                                                                                          
 
 export SVN_SSL_NO_VERIFY=true
 export LIMA_HOME=$HOME/lima/
+
+# Use Apps/brew by default
+eval "$(/Users/lysander/Apps/Homebrew/bin/brew shellenv)"
+# Eval the pyenv
+eval "$(pyenv init -)"
