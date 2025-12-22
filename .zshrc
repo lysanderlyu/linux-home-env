@@ -42,8 +42,26 @@ export LFS=$HOME/mnt/LFS
 
 export SVN_SSL_NO_VERIFY=true
 export LIMA_HOME=$HOME/lima/
+export ESP_HOME=$HOME/Tools-cs/ESP-IDF
+export EDITOR="nvim"
 
 # Use Apps/brew by default
 eval "$(/Users/lysander/Apps/Homebrew/bin/brew shellenv)"
 # Eval the pyenv
 eval "$(pyenv init -)"
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/Users/lysander/.pyenv/versions/miniconda3-3.8-23.9.0-0/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/Users/lysander/.pyenv/versions/miniconda3-3.8-23.9.0-0/etc/profile.d/conda.sh" ]; then
+        . "/Users/lysander/.pyenv/versions/miniconda3-3.8-23.9.0-0/etc/profile.d/conda.sh"
+    else
+        export PATH="/Users/lysander/.pyenv/versions/miniconda3-3.8-23.9.0-0/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
