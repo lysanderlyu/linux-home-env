@@ -12,7 +12,7 @@ set font "SF Pro Regular 15"
 set preload true               # Load pages in background
 set selection-clipboard clipboard
 
-set zoom-min 180                    # Minimum zoom level
+set zoom-min 100                    # Minimum zoom level
 set zoom-center true
 set zoom-step 10
 set adjust-open best-fit
