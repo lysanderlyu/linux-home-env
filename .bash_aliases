@@ -1,11 +1,16 @@
 #!/bin/bash
 
-if [ -n "$BASH_VERSION" ]; then
+if [ "$(uname)" = "Linux" ]; then
     alias cat='batcat -P'
+    alias dps='dpkg -s'
+    alias dpS='dpkg -S'
+    alias dpl='dpkg -l'
+    alias dpL='dpkg -L'
     alias ll='ls -1vFAlh'
     alias la='ls -vhA'
     alias l='ls -1vhCF'
     alias apt='sudo apt'
+    alias fdisk='sudo fdisk'
     alias copy='wl-copy'
     alias paste="wl-paste | grep -v '^$'"
     alias lu='lsusb'
@@ -24,10 +29,21 @@ if [ -n "$BASH_VERSION" ]; then
         command nohup zathura "$file_path" > /dev/null 2>&1 &
     }
 
-else
+    V2rayN() {
+        command nohup v2rayN > /dev/null 2>&1 &
+    }
+
+elif [ "$(uname)" = "Darwin" ]; then
     alias dmesg='sudo dmesg'
     alias lsb='diskutil list'
-    alias lu='system_profiler SPUSBDataType'
+    alias lu='system_profiler SPUSBHostDataType'
+
+    function dum(){
+        du -m -d 1 "$@" | awk '$1 > 300' 
+    }
+    function dug(){
+        du -g -d 1 "$@" | awk '$1 > 1' 
+    }
 
     function apt(){
         export HOMEBREW_PREFIX="/opt/homebrew";
@@ -105,6 +121,11 @@ else
     alias copy="tr -d '\r\n' | pbcopy"
     alias paste="pbpaste | tr -d '\n'"
     alias office="open -a wpsoffice"
+    alias ufb="sudo uuu FB:"
+    alias ufbu="sudo uuu FB: ucmd"
+    alias usdp="sudo uuu SDP:"
+
+    alias dolphin='dolphin > /dev/null 2>&1 &'
     coffice() {
         file_path=$(pbpaste | tr -d '\r\n')
         # Check if path is non-empty
@@ -135,21 +156,25 @@ else
     }
     alias minicom3='sudo minicom -D "/dev/tty.usbserial-12440" -b 1500000 -c on '
     alias screen3='screen "/dev/tty.usbserial-12440" 1500000'
+    alias picocom2='sudo picocom "/dev/tty.usbserial-1440" -b 115200'
     alias picocom3='sudo picocom "/dev/tty.usbserial-12440" -b 1500000'
+# Other OS
+else
+
 fi
+
+# Below is the Linux and Darwin compatible alias
+alias api='apt info'
 alias c='clear'
 alias du1='du -hd 1'
 alias fh='df -ah'
 alias mount='sudo mount -v'
 alias umount='sudo umount -v'
-alias fdisk='sudo fdisk'
 alias man1='tldr'
-alias pip='python3 -m pipi'
 alias dd='sudo dd status=progress'
 alias rsync='rsync --progress'
 alias watch='watch -n 0.1'
 alias fzf='fzf|copy'
-alias dolphin='dolphin > /dev/null 2>&1 &'
 alias wssh='ssh -p 20222'
 alias wscp='scp -P 20222'
 
@@ -167,14 +192,9 @@ Ghostty() {
     command nohup ghostty > /dev/null 2>&1 & exit
 }
 
-
 ckular() {
     file_path=$(paste)
     command nohup okular "$file_path" > /dev/null 2>&1 &
-}
-
-V2rayN() {
-    command nohup v2rayN > /dev/null 2>&1 &
 }
 
 calcmem() {
