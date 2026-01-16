@@ -22,7 +22,7 @@ ln -f ${ROOT_DIR}/.vimrc ${HOME}/
 ln -f ${ROOT_DIR}/.qt512.env ${HOME}/
 ln -f ${ROOT_DIR}/.gitconfig ${HOME}/
 
-mkdir -p ${ROOT_DIR}/.config/zathura/ 
+mkdir -p ${HOME}/.config/zathura/ 
 ln -f ${ROOT_DIR}/.config/zathura/zathurarc ${HOME}/.config/zathura/zathurarc
 
 mkdir -p ${HOME}/bin
