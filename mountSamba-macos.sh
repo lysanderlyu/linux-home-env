@@ -6,6 +6,7 @@ android156="android156"
 rbdebian="rbdebian"
 arm_win11="arm-win11"
 arm_debian="arm-debian"
+arm_ubuntu="arm-ubuntu"
 
 # Share passwords
 android156_pass="realbom"
@@ -95,8 +96,19 @@ testAndMountArmDebian() {
     fi
 }
 
+testAndMountArmUbuntu() {
+    if ping_ok "$arm_ubuntu"; then
+        echo "arm-ubuntu online, mounting..."
+        if ! mount | grep -q "$Ubuntu"; then
+            mount_smbfs "//lysander:${rbWin10_pass}@${arm_ubuntu}/Home" "$Ubuntu"
+        fi
+        echo "arm-ubuntu mounted."
+    fi
+}
+
 testAndMountAndroid
 testAndMountRBDebian
 testAndMountRBWin10
 testAndMountArmWin11
 testAndMountArmDebian
+testAndMountArmUbuntu
