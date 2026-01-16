@@ -155,8 +155,11 @@ export PATH=$HOME/Tools/xtensa-lx106-elf/bin:$PATH
 
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - bash)"
+if [ -d $PYENV_ROOT/bin ]; then
+    eval "$(pyenv init - bash)"
+fi
 
+if [ -e "/home/lysander/.pyenv" ];then 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/home/lysander/.pyenv/versions/miniconda3-3.12-24.1.2-0/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
@@ -171,4 +174,4 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
+fi
