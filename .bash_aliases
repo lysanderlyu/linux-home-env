@@ -160,7 +160,7 @@ elif [ "$(uname)" = "Darwin" ]; then
     alias picocom3='sudo picocom "/dev/tty.usbserial-12440" -b 1500000'
 # Other OS
 else
-
+    echo "Other OS bash_alias"
 fi
 
 # Below is the Linux and Darwin compatible alias
