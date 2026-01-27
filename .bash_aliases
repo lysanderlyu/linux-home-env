@@ -103,6 +103,18 @@ elif [ "$(uname)" = "Darwin" ]; then
         sudo /opt/local/bin/port "$@"
     }
 
+    Open() {
+        file_path=$(pbpaste | tr -d '\r\n')
+        # Check if path is non-empty
+        if [ -z "$file_path" ]; then
+            echo "Clipboard is empty!"
+            return 1
+        fi
+
+        # Open Zathura in background
+        command open "$file_path" > /dev/null 2>&1 &
+    }
+
     cathura() {
         file_path=$(pbpaste | tr -d '\r\n')
         # Check if path is non-empty
@@ -121,6 +133,7 @@ elif [ "$(uname)" = "Darwin" ]; then
     alias copy="tr -d '\r\n' | pbcopy"
     alias paste="pbpaste | tr -d '\n'"
     alias office="open -a wpsoffice"
+    alias rkLinuxUgTool="sudo rkLinuxUgTool"
     alias ufb="sudo uuu FB:"
     alias ufbu="sudo uuu FB: ucmd"
     alias usdp="sudo uuu SDP:"
@@ -171,6 +184,7 @@ alias fh='df -ah'
 alias mount='sudo mount -v'
 alias umount='sudo umount -v'
 alias man1='tldr'
+alias uuu='sudo uuu -v'
 alias dd='sudo dd status=progress'
 alias rsync='rsync --progress'
 alias watch='watch -n 0.1'
