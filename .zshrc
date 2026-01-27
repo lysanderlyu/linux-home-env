@@ -44,6 +44,7 @@ export SVN_SSL_NO_VERIFY=true
 export LIMA_HOME=$HOME/lima/
 export ESP_HOME=$HOME/Tools-cs/ESP-IDF
 export EDITOR="nvim"
+export SDKROOT=$(xcrun --show-sdk-path)
 
 # Use Apps/brew by default
 eval "$(/Users/lysander/Apps/Homebrew/bin/brew shellenv)"
