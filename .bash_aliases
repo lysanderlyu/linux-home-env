@@ -151,6 +151,18 @@ elif [ "$(uname)" = "Darwin" ]; then
         open -a wpsoffice "$file_path"
     }
 
+    cB() {
+        file_path=$(pbpaste | tr -d '\r\n')
+        # Check if path is non-empty
+        if [ -z "$file_path" ]; then
+            echo "Clipboard is empty!"
+            return 1
+        fi
+    
+        # Open Zathura in background
+        cb cp "$file_path"
+    }
+
     cypora() {
         file_path=$(pbpaste | tr -d '\r\n')
         # Check if path is non-empty
@@ -229,4 +241,12 @@ calcmem() {
         else 
             print "No memory data available"
     }'
+}
+
+erans() {
+    command trans "$@" zh:en
+}
+
+crans() {
+    command trans "$@" en:zh
 }
