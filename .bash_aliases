@@ -203,6 +203,9 @@ alias watch='watch -n 0.1'
 alias fzf='fzf|copy'
 alias wssh='ssh -p 20222'
 alias wscp='scp -P 20222'
+alias ssh_macos='ssh -p 53100 lysander@tcloud'
+alias ssh_win10='ssh -p 43100 lysander@tcloud'
+alias ssh_wsl='ssh -p 34200 lysander@tcloud'
 
 man2(){
     command nvim -n -c "Man $*" -c "wincmd o"
