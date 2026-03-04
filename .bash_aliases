@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$(uname)" = "Linux" ]; then
-    alias cat='batcat -P'
+    alias cat='batcat -p'
     alias dps='dpkg -s'
     alias dpS='dpkg -S'
     alias dpl='dpkg -l'
@@ -34,6 +34,7 @@ if [ "$(uname)" = "Linux" ]; then
     }
 
 elif [ "$(uname)" = "Darwin" ]; then
+    alias cat='bat -p'
     alias dmesg='sudo dmesg'
     alias lsb='diskutil list'
     alias lu='system_profiler SPUSBHostDataType'
@@ -253,3 +254,4 @@ erans() {
 crans() {
     command trans "$@" en:zh
 }
+
