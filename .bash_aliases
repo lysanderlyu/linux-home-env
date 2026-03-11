@@ -18,6 +18,7 @@ if [ "$(uname)" = "Linux" ]; then
     alias minicom1='sudo minicom -c on -D /dev/ttyUSB0 -b 115200'
     alias minicom2='sudo minicom -c on -D /dev/ttyUSB1 -b 115200'
     alias minicom3='sudo minicom -c on -D /dev/ttyUSB0 -b 1500000'
+    alias minicom4='sudo minicom -c on -D /dev/ttyUSB0 -b 921600'
     alias dmesg='sudo dmesg -e'
     alias odiff='TMPDIR=/run/shm diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
     alias hdiff='TMPDIR=/home/lysander/tmp/ diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
