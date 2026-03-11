@@ -25,6 +25,9 @@ ln -f ${ROOT_DIR}/.gitconfig ${HOME}/
 mkdir -p ${HOME}/.config/zathura/ 
 ln -f ${ROOT_DIR}/.config/zathura/zathurarc ${HOME}/.config/zathura/zathurarc
 
+mkdir -p ${HOME}/.config/ghostty/ 
+ln -f ${ROOT_DIR}/.config/ghostty/config ${HOME}/.config/ghostty/config
+
 mkdir -p ${HOME}/bin
 ln -f ${ROOT_DIR}/mountSamba.sh ${HOME}/bin/mountSamba.sh
 ln -f ${ROOT_DIR}/lfsChangeRoot.sh ${HOME}/bin/lfsChangeRoot.sh
