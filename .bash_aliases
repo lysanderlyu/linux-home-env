@@ -184,6 +184,7 @@ elif [ "$(uname)" = "Darwin" ]; then
     alias screen3='screen "/dev/tty.usbserial-12440" 1500000'
     alias picocom2='sudo picocom "/dev/tty.usbserial-1440" -b 115200'
     alias picocom3='sudo picocom "/dev/tty.usbserial-12440" -b 1500000'
+    alias picocom4='sudo picocom "/dev/tty.usbserial-12440" -b 115200'
 # Other OS
 else
     echo "Other OS bash_alias"
