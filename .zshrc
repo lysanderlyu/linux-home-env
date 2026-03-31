@@ -47,7 +47,6 @@ export EDITOR="nvim"
 export SDKROOT=$(xcrun --show-sdk-path)
 
 # Use Apps/brew by default
-eval "$(/Users/lysander/Apps/Homebrew/bin/brew shellenv)"
 # Eval the pyenv
 eval "$(pyenv init -)"
 
