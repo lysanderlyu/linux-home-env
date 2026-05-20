@@ -6,7 +6,7 @@ set sandbox none		 # Disable sandbox while open web link
 
 #set guioptions "none"              # Clean UI
 set smooth-scroll true
-set scroll-step 40                 # Smooth scrolling
+set scroll-step 3                # Smooth scrolling
 set font "SF Pro Regular 15"
 
 set preload true               # Load pages in background

@@ -181,8 +181,9 @@ elif [ "$(uname)" = "Darwin" ]; then
     svn2git() {
         PATH="/opt/local/bin:/opt/local/sbin:$PATH" /opt/local/bin/svn-all-fast-export "$@"
     }
-    alias minicom3='sudo minicom -D "/dev/tty.usbserial-12440" -b 1500000 -c on '
-    alias screen3='screen "/dev/tty.usbserial-12440" 1500000'
+    alias minicom1='sudo minicom -D "/dev/tty.usbserial-124410" -b 115200 -c on '
+    alias minicom2='sudo minicom -D "/dev/tty.usbserial-124410" -b 921600 -c on '
+    alias minicom3='sudo minicom -D "/dev/tty.usbserial-124410" -b 1500000 -c on '
     alias picocom2='sudo picocom "/dev/tty.usbserial-1440" -b 115200'
     alias picocom3='sudo picocom "/dev/tty.usbserial-12440" -b 1500000'
     alias picocom4='sudo picocom "/dev/tty.usbserial-12440" -b 115200'
@@ -209,6 +210,10 @@ alias wscp='scp -P 20222'
 alias ssh_macos='ssh -p 53100 lysander@tcloud'
 alias ssh_win10='ssh -p 43100 lysander@tcloud'
 alias ssh_wsl='ssh -p 34200 lysander@tcloud'
+
+man3(){
+    command nvim -n -c "$*" -c "wincmd o"
+}
 
 man2(){
     command nvim -n -c "Man $*" -c "wincmd o"
