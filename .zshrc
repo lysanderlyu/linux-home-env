@@ -46,7 +46,8 @@ export ESP_HOME=$HOME/Tools-cs/ESP-IDF
 export EDITOR="nvim"
 export SDKROOT=$(xcrun --show-sdk-path)
 
-# Use Apps/brew by default
+# Use /opt/homebrew's brew by default
+eval "$(/opt/homebrew/bin/brew shellenv)"
 # Eval the pyenv
 eval "$(pyenv init -)"
 
