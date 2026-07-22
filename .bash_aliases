@@ -25,13 +25,38 @@ if [ "$(uname)" = "Linux" ]; then
     alias journalctl='sudo journalctl'
     alias rkLinuxUgTool='sudo rkLinuxUgTool'
 
-    cathura() {
+    Open() {
+        local file_path
+        if [ $# -ge 1 ]; then
+            file_path="$1"
+        else
         file_path=$(wl-paste)
-        command nohup zathura "$file_path" > /dev/null 2>&1 &
+        fi
+    
+        if command -v wslview > /dev/null 2>&1; then
+            wslview "$file_path" > /dev/null 2>&1 &
+        else
+            xdg-open "$file_path" > /dev/null 2>&1 &
+        fi
     }
 
-    V2rayN() {
-        command nohup v2rayN > /dev/null 2>&1 &
+    cathura() {
+        local file_path
+        if [ $# -ge 1 ]; then
+            file_path="$1"
+        else
+            file_path=$(wl-paste)
+        fi
+    
+        # Check if path is non-empty
+        if [ -z "$file_path" ]; then
+            echo "Clipboard is empty!"
+            return 1
+        fi
+    
+        # Resolve to real path (handle symlinks)
+        real_path=$(realpath "$file_path" 2>/dev/null)
+        command nohup cathura "$file_path" > /dev/null 2>&1 &
     }
 
 elif [ "$(uname)" = "Darwin" ]; then
