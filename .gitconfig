@@ -13,8 +13,8 @@
 	co = checkout
 	br = branch
 	bl = blame
-        d = diff
-        di = diff
+    d = diff
+    di = diff
 	cm = commit
 	s = status
 	st = status
@@ -23,6 +23,7 @@
 	ra = reset --mixed
 	lg = log --graph
 	lga = log --graph --all
+	lgo = log --graph --oneline
 	last = log -1 HEAD
 	wta = worktree add
 	wtl = worktree list
@@ -30,4 +31,4 @@
 	wtd = worktree remove
 	wtr = worktree repair
 	wtp = worktree prune
-        lgf = "!f() { git log --pretty=format:'%h %ad %an %s' --date=short -- \"$1\"; }; f"
+    lgf = "!f() { git log --pretty=format:'%h %ad %an %s' --date=short -- \"$1\"; }; f"
