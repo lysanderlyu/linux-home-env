@@ -26,12 +26,16 @@ export HOMEBREW_COLOR=1
 export TERM="xterm-256color"
 
 # Export some path
-export Android156=$HOME/mnt/Android156                                                                                                                                                                            
-export RealbomFTP=$HOME/mnt/RealbomFTP                                                                                                                                                                            
+export Android109=$HOME/mnt/Android109
+export FeasycomFTP=$HOME/mnt/FeasycomFTP                                                                                                                                                                            
 export Learning=$HOME/mnt/Win10/Learning                                                                                                                                                                         
 export Data=$HOME/mnt/Win10/Data                                                                                                                                                                         
+export WSLHome=$HOME/mnt/WSL/Home                                                                                                                                                                         
 export Other=$HOME/mnt/Win10/Other                                                                                                                                                                         
 export System=$HOME/mnt/Win10/System                                                                                                                                                                               
+export Document=$HOME/mnt/Win10/Document                                                                                                                                                                               
+export Software=$HOME/mnt/Win10/Software                                                                                                                                                                               
+export Lenovo=$HOME/mnt/Win10/Lenovo                                                                                                                                                                               
 export GDriver=$HOME/mnt/GDriver                                                                                                                                                                               
 export RBDebian=$HOME/mnt/RBDebian                                                                                                                                                                                    
 export Ubuntu=$HOME/mnt/Ubuntu                                                                                                                                                                                    
