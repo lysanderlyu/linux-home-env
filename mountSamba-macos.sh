@@ -1,98 +1,118 @@
 #!/bin/bash
 
 # Hostnames → macOS can resolve these directly
-rbWin10="rbWin10"
-android156="android156"
-rbdebian="rbdebian"
-arm_win11="arm-win11"
-arm_debian="arm-debian"
+Win10="lysander-pc"
+Win11="feasycom"
 arm_ubuntu="arm-ubuntu"
 
 # Share passwords
-android156_pass="realbom"
-rbWin10_pass="856312"
+Win10_user="lyuyosin"
+Win10_pass="http.147."
+
+Win11_user="feasycom"
+Win11_pass="Feasycom%40123."
+WSL2_pass="856312"
 
 # Mount points
-# Android156="$HOME/mnt/android156"
-# RBDebian="$HOME/mnt/rbdebian"
+# Ubuntu="$HOME/mnt/Ubuntu"
 # System="$HOME/mnt/System"
-# Learning="$HOME/mnt/Learning"
-# Other="$HOME/mnt/Other"
-# Data="$HOME/mnt/Data"
-# Wsl="$HOME/mnt/Wsl"
-
-# Ensure dirs exist
-# mkdir -p "$Android156" "$RBDebian" "$System" "$Learning" "$Other" "$Data"
-
-# macOS SMB mount syntax:
-# mount_smbfs "//user:pass@hostname/share" /Local/MountPoint
+# Document="$HOME/mnt/Document"
+# Software="$HOME/mnt/Software"
+# Lenovo="$HOME/mnt/Lenovo"
 
 ping_ok() {
     # ping -t 1 "$1" 2>/dev/null | grep -q "1 packets"
     ping -c 1 -W 1000 "$1" >/dev/null 2>&1
 }
 
-testAndMountAndroid() {
-    if ping_ok "$android156"; then
-        echo "android156 online, mounting..."
-        if ! mount | grep -q "$Android156"; then
-            mount_smbfs "//yclv:${android156_pass}@${android156}/work_yclv" "$Android156"
-        fi
-        echo "android156 mounted."
-    fi
-}
-
-testAndMountRBDebian() {
-    if ping_ok "$rbdebian"; then
-        echo "rbdebian online, mounting..."
-        if ! mount | grep -q "$RBDebian"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${rbdebian}/Home" "$RBDebian"
-        fi
-        echo "rbdebian mounted."
-    fi
-}
-
-testAndMountRBWin10() {
-    if ping_ok "$rbWin10"; then
-        echo "rbWin10 online, mounting..."
+testAndMountWin10() {
+    if ping_ok "$Win10"; then
+        echo "Win10 online, mounting..."
 
         if ! mount | grep -q "$System"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/System"   "$System"
+            mount_smbfs "//${Win10_user}:${Win10_pass}@${Win10}/System"   "$System"
         fi
         if ! mount | grep -q "$Learning"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Learning" "$Learning"
+            mount_smbfs "//${Win10_user}:${Win10_pass}@${Win10}/Software" "$Software"
         fi
         if ! mount | grep -q "$Other"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Other"    "$Other"
+            mount_smbfs "//${Win10_user}:${Win10_pass}@${Win10}/Document"   "$Document"
         fi
         if ! mount | grep -q "$Data"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${rbWin10}/Data"     "$Data"
+            mount_smbfs "//${Win10_user}:${Win10_pass}@${Win10}/Lenovo"     "$Lenovo"
         fi
-        # SSHFS works the same on macOS if you installed it via brew (osxfuse + sshfs)
-        # sshfs -o allow_other -p 20222 lysander@"${rbWin10}":/home/lysander "$Wsl"
 
-        echo "rbWin10 mounted."
+        echo "Win10 mounted."
     fi
 }
 
-testAndMountArmWin11() {
-    if ping_ok "${arm_win11}"; then
-        echo "arm-win11 online, mounting..."
+testAndMountWin11() {
+    if ! ping_ok "$Win11"; then
+        echo "Win11 offline (ping failed)"
+        return 1
+    fi
 
-        if ! mount | grep -q "$ArmWin11_Dev"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${arm_win11}/Dev"   "${ArmWin11_Dev}"
-        fi
-        echo "arm-win11 mounted."
+    # Check already mounted?
+    if mount | grep -q "$Data"; then
+        echo "Already mounted"
+        return 0
+    fi
+
+    # Try to connect to SMB port first
+    if ! nc -z -w 3 "$Win11" 445; then
+        echo "Error: SMB port 445 unreachable – check firewall and routing"
+        return 1
+    fi
+
+    # Attempt the mount
+    if mount_smbfs "//${Win11_user}:${Win11_pass}@${Win11}/Data" "$Data"; then
+        echo "Win11 mounted."
+    else
+        echo "Mount failed with exit code $?"
+        return 1
     fi
 }
 
-testAndMountArmDebian() {
-    if ping_ok "$arm_debian"; then
-        echo "arm-debian online, mounting..."
-        if ! mount | grep -q "$RBDebian"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${arm_debian}/Home" "$RBDebian"
-        fi
-        echo "rbdebian mounted."
+testAndMountWSL2() {
+    if ! ping_ok "$Win11"; then
+        echo "Win11 offline (ping failed)"
+        return 1
+    fi
+
+    # Check already mounted?
+    if mount | grep -q "$WSLHome"; then
+        echo "Already mounted"
+        return 0
+    fi
+
+    # Try to connect to SMB port first
+    if ! nc -z -w 3 "$Win11" 1445; then
+        echo "Error: SMB port 1445 unreachable – check firewall and routing"
+        return 1
+    fi
+
+    # Attempt the mount
+    if mount_smbfs "//${Win11_user}:${WSL2_pass}@${Win11}:1445/Home" "$WSLHome"; then
+        echo "WSLHome mounted."
+    else
+        echo "Mount failed with exit code $?"
+        return 1
+    fi
+
+    # Attempt the mount
+    if mount_smbfs "//${Win11_user}:${WSL2_pass}@${Win11}:1445/Android109" "$Android109"; then
+        echo "Android109 mounted."
+    else
+        echo "Mount failed with exit code $?"
+        return 1
+    fi
+
+    # Attempt the mount
+    if mount_smbfs "//${Win11_user}:${WSL2_pass}@${Win11}:1445/ftp" "$FeasycomFTP"; then
+        echo "FeasycomFTP mounted."
+    else
+        echo "Mount failed with exit code $?"
+        return 1
     fi
 }
 
@@ -100,15 +120,11 @@ testAndMountArmUbuntu() {
     if ping_ok "$arm_ubuntu"; then
         echo "arm-ubuntu online, mounting..."
         if ! mount | grep -q "$Ubuntu"; then
-            mount_smbfs "//lysander:${rbWin10_pass}@${arm_ubuntu}/Home" "$Ubuntu"
+            mount_smbfs "//lysander:${Win10_pass}@${arm_ubuntu}/Home" "$Ubuntu"
         fi
         echo "arm-ubuntu mounted."
     fi
 }
 
-testAndMountAndroid
-testAndMountRBDebian
-testAndMountRBWin10
-testAndMountArmWin11
-testAndMountArmDebian
-testAndMountArmUbuntu
+# testAndMountWin11
+testAndMountWSL2
