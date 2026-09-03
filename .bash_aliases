@@ -206,14 +206,14 @@ elif [ "$(uname)" = "Darwin" ]; then
     svn2git() {
         PATH="/opt/local/bin:/opt/local/sbin:$PATH" /opt/local/bin/svn-all-fast-export "$@"
     }
-    alias minicom1='sudo minicom -D "/dev/tty.usbserial-BG02DFXU" -b 115200 -c on '
-    alias minicom2='sudo minicom -D "/dev/tty.usbserial-BG02DFXU" -b 921600 -c on '
-    alias minicom3='sudo minicom -D "/dev/tty.usbserial-BG02DFXU" -b 1500000 -c on '
-    alias minicom4='sudo minicom -D "/dev/tty.usbserial-BG02DFXU" -b 2000000 -c on '
-    alias picocom1='sudo picocom "/dev/tty.usbserial-BG02DFXU" -b 115200'
-    alias picocom2='sudo picocom "/dev/tty.usbserial-BG02DFXU" -b 921600'
-    alias picocom3='sudo picocom "/dev/tty.usbserial-BG02DFXU" -b 1500000'
-    alias picocom4='sudo picocom "/dev/tty.usbserial-BG02DFXU" -b 2000000'
+    alias minicom1='minicom -D "/dev/tty.usbserial-BG02DFXU" -b 115200 -c on '
+    alias minicom2='minicom -D "/dev/tty.usbserial-BG02DFXU" -b 921600 -c on '
+    alias minicom3='minicom -D "/dev/tty.usbserial-BG02DFXU" -b 1500000 -c on '
+    alias minicom4='minicom -D "/dev/tty.usbserial-BG02DFXU" -b 2000000 -c on '
+    alias picocom1='picocom "/dev/tty.usbserial-BG02DFXU" -b 115200'
+    alias picocom2='picocom "/dev/tty.usbserial-BG02DFXU" -b 921600'
+    alias picocom3='picocom "/dev/tty.usbserial-BG02DFXU" -b 1500000'
+    alias picocom4='picocom "/dev/tty.usbserial-BG02DFXU" -b 2000000'
 # Other OS
 else
     echo "Other OS bash_alias"
@@ -225,6 +225,7 @@ alias c='clear'
 alias du1='du -hd 1'
 alias fh='df -ah'
 alias mount='sudo mount -v'
+alias tcpdump='sudo tcpdump'
 alias umount='sudo umount -v'
 alias man1='tldr'
 alias uuu='sudo uuu -v'
