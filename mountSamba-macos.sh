@@ -6,6 +6,7 @@ set -u
 Win10="lysander-pc"
 Win11="feasycom"
 arm_ubuntu="arm-ubuntu"
+rpi="rpi"
 
 # Share passwords
 Win10_user="lyuyosin"
@@ -15,12 +16,16 @@ Win11_user="feasycom"
 Win11_pass="Feasycom%40123."
 WSL2_pass="856312"
 
+Rpi_user="lysander"
+Rpi_pass="856312"
+
 Mount_option=""
 
 # Mount points used by the active WSL2 mounts
 # WSLHome="$HOME/mnt/Wsl/Home"
 # Android109="$HOME/mnt/Android109"
 # FeasycomFTP="$HOME/mnt/FeasycomFTP"
+# Rpi="$HOME/mnt/Rpi"
 
 # Inactive / optional
 # Ubuntu="$HOME/mnt/Ubuntu"
@@ -34,6 +39,7 @@ ALL_MOUNTS=(
     "$WSLHome"
     "$Android109"
     "$FeasycomFTP"
+    "$Rpi"
 )
 
 ping_ok() {
@@ -86,10 +92,11 @@ resolve_unmount_targets() {
             Home|WSLHome|wsl|Wsl) echo "$WSLHome" ;;
             Android109|android109|android) echo "$Android109" ;;
             FeasycomFTP|ftp|FTP) echo "$FeasycomFTP" ;;
+            Rpi|rpi) echo "$Rpi" ;;
             /*) echo "$arg" ;;
             *)
                 echo "Unknown mount target: $arg" >&2
-                echo "Known names: Home, Android109, FeasycomFTP" >&2
+                echo "Known names: Home, Android109, FeasycomFTP, Rpi" >&2
                 return 1
                 ;;
         esac
@@ -201,16 +208,42 @@ testAndMountArmUbuntu() {
     fi
 }
 
+testAndMountRpi() {
+    if ! ping_ok "$rpi"; then
+        echo "rpi offline (ping failed)"
+        return 1
+    fi
+
+    if ! nc -z -w 3 "$rpi" 445; then
+        echo "Error: SMB port 445 unreachable on rpi – check firewall and routing"
+        return 1
+    fi
+
+    ensure_mount_dir "$Rpi"
+
+    if is_mounted "$Rpi"; then
+        echo "Already mounted: $Rpi"
+        return 0
+    fi
+
+    if mount_smbfs ${Mount_option} "//${Rpi_user}:${Rpi_pass}@${rpi}/rpi" "$Rpi"; then
+        echo "Rpi mounted."
+    else
+        echo "Mount failed with exit code $? : $Rpi"
+        return 1
+    fi
+}
+
 usage() {
     cat <<EOF
 Usage: $(basename "$0") [mount|unmount] [target ...]
 
   (default) | mount
-                Mount WSL SMB shares (Home, Android109, FeasycomFTP)
+                Mount WSL SMB shares (Home, Android109, FeasycomFTP) and Rpi
 
   -u, --unmount, unmount
                 Force-unmount shares with: diskutil unmount force <path>
-                Optional targets: Home, Android109, FeasycomFTP, or a full path
+                Optional targets: Home, Android109, FeasycomFTP, Rpi, or a full path
 
   -h, --help    Show this help
 
@@ -218,6 +251,7 @@ Examples:
   $(basename "$0")
   $(basename "$0") -u
   $(basename "$0") -u Home Android109
+  $(basename "$0") -u Rpi
 EOF
 }
 
@@ -261,8 +295,9 @@ case "$mode" in
         ;;
     mount)
         if [[ ${#targets[@]} -gt 0 ]]; then
-            echo "Mount targets are not supported yet; mounting all WSL shares." >&2
+            echo "Mount targets are not supported yet; mounting all shares." >&2
         fi
         testAndMountWSL2
+        testAndMountRpi
         ;;
 esac

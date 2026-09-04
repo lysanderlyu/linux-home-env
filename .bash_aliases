@@ -20,7 +20,7 @@ if [ "$(uname)" = "Linux" ]; then
     alias minicom3='sudo minicom -c on -D /dev/ttyUSB0 -b 1500000'
     alias minicom4='sudo minicom -c on -D /dev/ttyUSB0 -b 921600'
     alias dmesg='sudo dmesg -e'
-    alias odiff='TMPDIR=/run/shm diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
+    alias odiff='TMPDIR=/run/shm diffoscope --markdown=diff.md --exclude-directory-metadata=yes --no-default-limits --progress'
     alias hdiff='TMPDIR=/home/lysander/tmp/ diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
     alias journalctl='sudo journalctl'
     alias rkLinuxUgTool='sudo rkLinuxUgTool'
@@ -90,7 +90,7 @@ elif [ "$(uname)" = "Darwin" ]; then
         # Prepend external Homebrew bin to PATH for this command only
         $HOMEBREW_REPOSITORY/bin/brew "$@"
     }
-    alias odiff='TMPDIR=/tmp diffoscope --markdown=diff.md --exclude-directory-metadata=yes'
+    alias odiff='TMPDIR=/tmp diffoscope --markdown=diff.md --exclude-directory-metadata=yes --no-default-limits --progress'
     alias journalctl='sudo log show'
 
     # External Homebrew on /Volumes/Apps/Homebrew
