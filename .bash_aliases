@@ -25,6 +25,25 @@ if [ "$(uname)" = "Linux" ]; then
     alias journalctl='sudo journalctl'
     alias rkLinuxUgTool='sudo rkLinuxUgTool'
 
+    fcd() {
+      local base="${1:-.}"
+      local dir
+      # Ubuntu/Debian 注意:fd-find 包装完二进制叫 fdfind,不是 fd
+      if command -v fd >/dev/null 2>&1; then
+        dir=$(fd --type d --hidden --exclude .git --exclude node_modules . "$base" 2>/dev/null \
+              | command fzf --preview 'ls --color=always -la {}' \
+                            --color=fg+:green,hl:yellow,pointer:magenta,border:cyan,prompt:cyan,info:blue \
+                            --height 100%) || return
+      else
+        # 无 fd 时退回 find(慢一点,但零依赖)
+        dir=$(find "$base" -type d -not -path '*/.git*' 2>/dev/null \
+              | command fzf --preview 'ls --color=always -la {}' \
+                            --color=fg+:green,hl:yellow,pointer:magenta,border:cyan,prompt:cyan,info:blue \
+                            --height 100%) || return
+      fi
+      cd "$dir"
+    }
+
     Open() {
         local file_path
         if [ $# -ge 1 ]; then
@@ -61,6 +80,7 @@ if [ "$(uname)" = "Linux" ]; then
 
 elif [ "$(uname)" = "Darwin" ]; then
     alias cat='bat -p'
+    alias sed='gsed'
     alias dmesg='sudo dmesg'
     alias lsb='diskutil list'
     alias lu='system_profiler SPUSBHostDataType'
@@ -92,6 +112,16 @@ elif [ "$(uname)" = "Darwin" ]; then
     }
     alias odiff='TMPDIR=/tmp diffoscope --markdown=diff.md --exclude-directory-metadata=yes --no-default-limits --progress'
     alias journalctl='sudo log show'
+
+    fcd() {
+      local base="${1:-.}"
+      local dir
+      dir=$(fd --type d --hidden --exclude .git --exclude node_modules . "$base" 2>/dev/null \
+            | command fzf --preview 'CLICOLOR_FORCE=1 ls -laG {}' \
+                          --color=fg+:green,hl:yellow,pointer:magenta,border:cyan,prompt:cyan,info:blue \
+                          --height 100%) || return
+      cd "$dir"
+    }
 
     # External Homebrew on /Volumes/Apps/Homebrew
     function Apt() {
