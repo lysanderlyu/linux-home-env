@@ -22,10 +22,12 @@ Rpi_pass="856312"
 Mount_option=""
 
 # Mount points used by the active WSL2 mounts
-# WSLHome="$HOME/mnt/Wsl/Home"
-# Android109="$HOME/mnt/Android109"
-# FeasycomFTP="$HOME/mnt/FeasycomFTP"
-# Rpi="$HOME/mnt/Rpi"
+WSLHome="${WSLHome:-$HOME/mnt/WSL/Home}"
+WSLRoot="${WSLRoot:-$HOME/mnt/WSL/Root}"
+Android109="${Android109:-$HOME/mnt/Android109/Work}"
+Android109Home="${Android109Home:-$HOME/mnt/Android109/Home}"
+FeasycomFTP="${FeasycomFTP:-$HOME/mnt/FeasycomFTP}"
+Rpi="${Rpi:-$HOME/mnt/Rpi}"
 
 # Inactive / optional
 # Ubuntu="$HOME/mnt/Ubuntu"
@@ -37,7 +39,9 @@ Mount_option=""
 
 ALL_MOUNTS=(
     "$WSLHome"
+    "$WSLRoot"
     "$Android109"
+    "$Android109Home"
     "$FeasycomFTP"
     "$Rpi"
 )
@@ -89,14 +93,24 @@ resolve_unmount_targets() {
 
     for arg in "$@"; do
         case "$arg" in
-            Home|WSLHome|wsl|Wsl) echo "$WSLHome" ;;
-            Android109|android109|android) echo "$Android109" ;;
+            Home|WSLHome|home) echo "$WSLHome" ;;
+            Root|WSLRoot|root) echo "$WSLRoot" ;;
+            wsl|Wsl|WSL)
+                echo "$WSLHome"
+                echo "$WSLRoot"
+                ;;
+            Android109|android109|Work|work) echo "$Android109" ;;
+            Android109Home|android109home|androidhome) echo "$Android109Home" ;;
+            android)
+                echo "$Android109"
+                echo "$Android109Home"
+                ;;
             FeasycomFTP|ftp|FTP) echo "$FeasycomFTP" ;;
             Rpi|rpi) echo "$Rpi" ;;
             /*) echo "$arg" ;;
             *)
                 echo "Unknown mount target: $arg" >&2
-                echo "Known names: Home, Android109, FeasycomFTP, Rpi" >&2
+                echo "Known names: Home, Root, WSL, Android109, Android109Home, FeasycomFTP, Rpi" >&2
                 return 1
                 ;;
         esac
@@ -170,7 +184,9 @@ testAndMountWSL2() {
     fi
 
     ensure_mount_dir "$WSLHome"
+    ensure_mount_dir "$WSLRoot"
     ensure_mount_dir "$Android109"
+    ensure_mount_dir "$Android109Home"
     ensure_mount_dir "$FeasycomFTP"
 
     if is_mounted "$WSLHome"; then
@@ -181,12 +197,28 @@ testAndMountWSL2() {
         echo "Mount failed with exit code $? : $WSLHome"
     fi
 
+    if is_mounted "$WSLRoot"; then
+        echo "Already mounted: $WSLRoot"
+    elif mount_smbfs ${Mount_option} "//${Win11_user}:${WSL2_pass}@${Win11}:1445/Root" "$WSLRoot"; then
+        echo "WSLRoot mounted."
+    else
+        echo "Mount failed with exit code $? : $WSLRoot"
+    fi
+
     if is_mounted "$Android109"; then
         echo "Already mounted: $Android109"
     elif mount_smbfs ${Mount_option} "//${Win11_user}:${WSL2_pass}@${Win11}:1445/Android109" "$Android109"; then
         echo "Android109 mounted."
     else
         echo "Mount failed with exit code $? : $Android109"
+    fi
+
+    if is_mounted "$Android109Home"; then
+        echo "Already mounted: $Android109Home"
+    elif mount_smbfs ${Mount_option} "//${Win11_user}:${WSL2_pass}@${Win11}:1445/Android109Home" "$Android109Home"; then
+        echo "Android109Home mounted."
+    else
+        echo "Mount failed with exit code $? : $Android109Home"
     fi
 
     if is_mounted "$FeasycomFTP"; then
@@ -239,18 +271,19 @@ usage() {
 Usage: $(basename "$0") [mount|unmount] [target ...]
 
   (default) | mount
-                Mount WSL SMB shares (Home, Android109, FeasycomFTP) and Rpi
+                Mount WSL SMB shares (Home, Root, Android109, Android109Home, FeasycomFTP) and Rpi
 
   -u, --unmount, unmount
                 Force-unmount shares with: diskutil unmount force <path>
-                Optional targets: Home, Android109, FeasycomFTP, Rpi, or a full path
+                Optional targets: Home, Root, WSL, Android109, Android109Home, FeasycomFTP, Rpi, or a full path
 
   -h, --help    Show this help
 
 Examples:
   $(basename "$0")
   $(basename "$0") -u
-  $(basename "$0") -u Home Android109
+  $(basename "$0") -u Root
+  $(basename "$0") -u Home Root Android109 Android109Home
   $(basename "$0") -u Rpi
 EOF
 }

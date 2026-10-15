@@ -26,11 +26,13 @@ export HOMEBREW_COLOR=1
 export TERM="xterm-256color"
 
 # Export some path
-export Android109=$HOME/mnt/Android109
+export Android109=$HOME/mnt/Android109/Work
+export Android109Home=$HOME/mnt/Android109/Home
 export FeasycomFTP=$HOME/mnt/FeasycomFTP                                                                                                                                                                            
 export Learning=$HOME/mnt/Win10/Learning                                                                                                                                                                         
 export Data=$HOME/mnt/Win10/Data                                                                                                                                                                         
 export WSLHome=$HOME/mnt/WSL/Home                                                                                                                                                                         
+export WSLRoot=$HOME/mnt/WSL/Root
 export Other=$HOME/mnt/Win10/Other                                                                                                                                                                         
 export System=$HOME/mnt/Win10/System                                                                                                                                                                               
 export Document=$HOME/mnt/Win10/Document                                                                                                                                                                               
@@ -41,6 +43,7 @@ export RBDebian=$HOME/mnt/RBDebian
 export Ubuntu=$HOME/mnt/Ubuntu                                                                                                                                                                                    
 export Ubuntu2204=$HOME/mnt/Ubuntu2204                                                                                                                                                                                    
 export ArmWin11_Dev=$HOME/mnt/ArmWin11/Dev                                                                                                                                                                                    
+export Rpi=$HOME/mnt/Rpi
                                                                                                                                                                                                              
 export LFS=$HOME/mnt/LFS                                                                                                                                                                                          
 

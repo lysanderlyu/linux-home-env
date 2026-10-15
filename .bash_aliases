@@ -320,3 +320,6 @@ crans() {
     command trans "$@" en:zh
 }
 
+cbscp() { 
+    scp "$1" /tmp/ && cb cp "/tmp/$(basename "$1")"; 
+}
