@@ -16,6 +16,20 @@ fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 # Initialize completions
 autoload -Uz compinit && compinit
 
+# zsh-autosuggestions (must be after compinit)
+source /opt/homebrew/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# carapace bridges (must be after compinit)
+export CARAPACE_BRIDGES='zsh,fish,bash,inshellisense'
+source <(carapace _carapace)
+
+# --- keymap notes: completion vs autosuggestion (2026-11) ---
+# TAB ................... carapace completion  (expand-or-complete)
+# Ctrl-E / End / Right .. accept whole suggestion  (widget: end-of-line)
+# Alt-Right ............. accept one word          (widget: forward-word)
+# Letting TAB accept the grey text first needs _zsh_tab_or_complete (NOT enabled:
+# it would shadow carapace completion whenever history already matches).
+
 # Skip insecure directory warnings
 zstyle ':completion:*' insecure
 
