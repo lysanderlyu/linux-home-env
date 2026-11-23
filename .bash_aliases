@@ -323,3 +323,5 @@ crans() {
 cbscp() { 
     scp "$1" /tmp/ && cb cp "/tmp/$(basename "$1")"; 
 }
+
+gdall() { git add -N "${@:-.}" && git diff -- "${@:-.}" && git reset -q -- "${@:-.}"; }
